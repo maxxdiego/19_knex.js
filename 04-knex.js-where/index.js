@@ -9,7 +9,6 @@ const database = require("./database");
 //   .table("games");
 // console.log(query.toQuery());
 
-
 // WHERE RAW
 // const query = database
 //   .select(["nome", "preco"])
@@ -22,9 +21,19 @@ const database = require("./database");
 const query = database
   .select(["nome", "preco"])
   // .where({ nome: "GTA" })
-  .whereRaw("nome = 'GTA' OR preco > 50")
+  .whereRaw("nome = 'GTA' OR preco > 60")
   .table("games").then(data => {
     console.log(data)
   }).catch(error => {
     console.log(error)
   })
+
+// // QUERY CRUA
+database
+  .raw("SELECT * FROM games;")
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
