@@ -1,30 +1,10 @@
 const database = require("./database");
 
-// INSERT (Inserindo dados no banco)
-
-// const dados = {
-//   nome: "Sea of Thieves",
-//   preco: 50.67,
-// };
-
-const dados = [
-  {
-    nome: "Call of Dutty 2",
-    preco: 60,
-  },
-  {
-    nome: "GTA",
-    preco: 40,
-  },
-  {
-    nome: "WoW",
-    preco: 120,
-  },
-];
-
-const query = database
-  .insert(dados)
-  .into("games")
+// SELECT (Selecionando dados do banco)
+database
+  // .select(["id", "preco"])
+  .select()
+  .table("games")
   .then((data) => {
     console.log(data);
   })
@@ -32,4 +12,21 @@ const query = database
     console.log(error);
   });
 
-// console.log(query.toQuery());
+// NESTED QUERIES (Queries aninhadas)
+database
+  .insert({ nome: "Mists of Noyah", preco: 25 })
+  .into("games")
+  .then((data) => {
+    database
+      .select(["id", "preco"])
+      .table("games")
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
